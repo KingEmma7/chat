@@ -1,5 +1,14 @@
 # @chat-adapter/linear
 
+## 4.45.0
+
+### Patch Changes
+
+- Updated dependencies [50c1116]
+- Updated dependencies [d0ff1dc]
+  - @chat-adapter/shared@4.45.0
+  - chat@4.45.0
+
 ## 4.44.0
 
 ### Patch Changes

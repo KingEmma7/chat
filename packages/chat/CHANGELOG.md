@@ -1,5 +1,29 @@
 # chat
 
+## 4.45.0
+
+### Minor Changes
+
+- d0ff1dc: feat: stream model reasoning with `reasoning` chunks
+  
+  `StreamChunk` has a new `reasoning` type, `{ type: "reasoning", text }`, for deltas of the model's reasoning. Like `task_update` and `plan_update`, `reasoning` chunks don't count toward the posted message's text.
+  
+  The Web adapter streams them to `useChat` as reasoning parts, or as AG-UI `REASONING_*` events with `protocol: "ag-ui"`. Consecutive `reasoning` chunks fill one part, and text, a new task, or the first plan chunk closes it. A `reasoning` chunk also closes the current text part, so `message.parts` keeps reasoning and text in the order the handler yielded them.
+  
+  `thread.post()` passes `reasoning` chunks only to adapters that set the new optional `supportsReasoningChunks` property on `Adapter` to `true`, which the Web adapter does. For every other adapter it removes them from the stream, so reasoning is never posted to a chat platform. The Slack adapter's `stream()` also skips them when called directly instead of forwarding them to Slack's streaming API, which has no reasoning chunk type. A rejected chunk would also turn off task and plan chunks for the rest of the stream.
+  
+  Reasoning events in an AI SDK `fullStream` or a TanStack AI stream are still skipped. Only `reasoning` chunks you yield are streamed.
+
+### Patch Changes
+
+- Updated dependencies [09cb11e]
+- Updated dependencies [50c1116]
+- Updated dependencies [e5e5206]
+- Updated dependencies [a6ec788]
+- Updated dependencies [6e0bba3]
+- Updated dependencies [0471806]
+  - @chat-adapter/catalog@4.45.0
+
 ## 4.44.0
 
 ### Minor Changes
